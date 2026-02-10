@@ -3,18 +3,74 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Johan Shop Dashboard</title>
     <link rel="stylesheet" href="styles.css">
-    <title>Johan Shop</title>
+    <script src="script.js" defer></script>
 </head>
 <body>
     <header>
-        <h1>Welcome to Johan Shop</h1>
+        <h1>Johan Shop Dashboard</h1>
+        <nav>
+            <ul>
+                <li><a href="#dashboard">Dashboard</a></li>
+                <li><a href="#work-entry">Work Entry</a></li>
+                <li><a href="#birth-registration">Birth Registration</a></li>
+                <li><a href="#customers">Customers</a></li>
+                <li><a href="#payments">Payments</a></li>
+                <li><a href="#reports">Reports</a></li>
+                <li><a href="#users">Users</a></li>
+                <li><a href="#activity-logs">Activity Logs</a></li>
+            </ul>
+        </nav>
     </header>
     <main>
-        <p>Your one-stop shop for all things awesome!</p>
+        <section id="dashboard">
+            <h2>Dashboard</h2>
+            <p>Welcome to the Johan Shop Dashboard.</p>
+        </section>
+        <section id="work-entry">
+            <h2>Work Entry</h2>
+            <form>
+                <label for="work-date" class="form-label">Date:</label>
+                <input type="date" id="work-date" name="work-date">
+                <label for="work-description" class="form-label">Description:</label>
+                <textarea id="work-description" name="work-description"></textarea>
+                <button type="submit">Submit</button>
+            </form>
+        </section>
+        <section id="birth-registration">
+            <h2>Birth Registration</h2>
+            <form>
+                <label for="child-name" class="form-label">Child Name:</label>
+                <input type="text" id="child-name" name="child-name">
+                <label for="birth-date" class="form-label">Birth Date:</label>
+                <input type="date" id="birth-date" name="birth-date">
+                <button type="submit">Register</button>
+            </form>
+        </section>
+        <section id="customers">
+            <h2>Customers</h2>
+            <p>Manage customers here.</p>
+        </section>
+        <section id="payments">
+            <h2>Payments</h2>
+            <p>Handle payments here.</p>
+        </section>
+        <section id="reports">
+            <h2>Reports</h2>
+            <p>View reports here.</p>
+        </section>
+        <section id="users">
+            <h2>Users</h2>
+            <p>Manage users here.</p>
+        </section>
+        <section id="activity-logs">
+            <h2>Activity Logs</h2>
+            <p>View activity logs here.</p>
+        </section>
     </main>
     <footer>
-        <p>Copyright © 2026 Johan Shop</p>
+        <p>&copy; 2026 Johan Shop. All rights reserved.</p>
     </footer>
 </body>
 </html>
