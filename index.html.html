@@ -1,0 +1,2840 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>JOHAN SHOP ERP</title>
+  
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Bootstrap Icons -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" rel="stylesheet">
+  
+  <style>
+    :root {
+      --primary: #667eea;
+      --secondary: #764ba2;
+      --success: #27ae60;
+      --warning: #f39c12;
+      --danger: #e74c3c;
+      --dark: #2c3e50;
+      --light: #ecf0f1;
+      --bg: #f8f9fa;
+    }
+    
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+      background-color: var(--bg);
+      color: #333;
+      line-height: 1.6;
+      min-height: 100vh;
+      margin: 0;
+      padding: 0;
+    }
+    
+    /* App Container */
+    #root {
+      display: flex;
+      min-height: 100vh;
+    }
+    
+    /* Sidebar Styles */
+    .sidebar {
+      width: 250px;
+      background: linear-gradient(180deg, var(--dark) 0%, #1a2530 100%);
+      color: white;
+      flex-shrink: 0;
+      display: flex;
+      flex-direction: column;
+      box-shadow: 2px 0 10px rgba(0,0,0,0.1);
+      z-index: 1000;
+    }
+    
+    .sidebar-header {
+      padding: 25px 20px;
+      text-align: center;
+      border-bottom: 1px solid rgba(255,255,255,0.1);
+    }
+    
+    .sidebar-header h2 {
+      color: white;
+      font-weight: 800;
+      font-size: 1.5rem;
+      margin: 0;
+      background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    
+    .sidebar-header .subtitle {
+      color: #95a5a6;
+      font-size: 0.8rem;
+      margin-top: 5px;
+    }
+    
+    .nav-item {
+      padding: 14px 20px;
+      color: #bdc3c7;
+      text-decoration: none;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      transition: all 0.3s ease;
+      border-left: 3px solid transparent;
+      font-weight: 500;
+      border: none;
+      background: none;
+      width: 100%;
+      text-align: left;
+    }
+    
+    .nav-item:hover {
+      background: rgba(102, 126, 234, 0.1);
+      color: white;
+      border-left: 3px solid var(--primary);
+    }
+    
+    .nav-item.active {
+      background: rgba(102, 126, 234, 0.15);
+      color: white;
+      border-left: 3px solid var(--primary);
+    }
+    
+    .nav-item i {
+      font-size: 1.1rem;
+      width: 24px;
+      text-align: center;
+    }
+    
+    /* Main Content Area */
+    .content-area {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
+    
+    /* Top Bar */
+    .topbar {
+      height: 70px;
+      background: white;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 25px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+      border-bottom: 1px solid #e0e0e0;
+      z-index: 999;
+    }
+    
+    .topbar-left {
+      display: flex;
+      align-items: center;
+      gap: 30px;
+    }
+    
+    .topbar-title {
+      font-weight: 700;
+      color: var(--dark);
+      font-size: 1.2rem;
+    }
+    
+    /* Top Menu Items */
+    .top-menu {
+      display: flex;
+      gap: 5px;
+      overflow-x: auto;
+      padding: 5px 0;
+    }
+    
+    .top-menu-btn {
+      background: transparent;
+      border: none;
+      color: #718096;
+      padding: 8px 16px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 14px;
+      font-weight: 500;
+      transition: all 0.3s ease;
+      white-space: nowrap;
+    }
+    
+    .top-menu-btn:hover {
+      background: rgba(102, 126, 234, 0.1);
+      color: var(--primary);
+    }
+    
+    .top-menu-btn.active {
+      background: rgba(102, 126, 234, 0.15);
+      color: var(--primary);
+      font-weight: 600;
+    }
+    
+    /* Topbar Right Section */
+    .topbar-right {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+    }
+    
+    .status-badge {
+      font-size: 0.85rem;
+      color: #7f8c8d;
+      background: #f8f9fa;
+      padding: 4px 12px;
+      border-radius: 20px;
+      border: 1px solid #e0e0e0;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    
+    .status-badge i {
+      color: var(--success);
+    }
+    
+    /* Profile Section */
+    .profile-section {
+      position: relative;
+    }
+    
+    .profile-btn {
+      background: transparent;
+      border: none;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      cursor: pointer;
+      padding: 8px 12px;
+      border-radius: 8px;
+      transition: background 0.3s ease;
+    }
+    
+    .profile-btn:hover {
+      background: rgba(102, 126, 234, 0.1);
+    }
+    
+    .profile-icon {
+      width: 36px;
+      height: 36px;
+      background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 600;
+      font-size: 16px;
+      color: white;
+    }
+    
+    .user-info {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+    }
+    
+    .user-name {
+      font-weight: 600;
+      font-size: 14px;
+      color: var(--dark);
+    }
+    
+    .user-role {
+      font-size: 12px;
+      color: #718096;
+    }
+    
+    .profile-dropdown {
+      position: absolute;
+      top: 100%;
+      right: 0;
+      background: white;
+      border-radius: 8px;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+      min-width: 220px;
+      margin-top: 10px;
+      overflow: hidden;
+      z-index: 1001;
+      display: none;
+    }
+    
+    .profile-dropdown.show {
+      display: block;
+      animation: fadeIn 0.2s ease;
+    }
+    
+    .dropdown-header {
+      padding: 15px 20px;
+      background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+      color: white;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    
+    .dropdown-header .profile-icon {
+      width: 40px;
+      height: 40px;
+    }
+    
+    .dropdown-header .user-info {
+      color: white;
+    }
+    
+    .dropdown-header .user-role {
+      color: rgba(255, 255, 255, 0.8);
+    }
+    
+    .dropdown-item {
+      width: 100%;
+      padding: 12px 20px;
+      border: none;
+      background: transparent;
+      text-align: left;
+      cursor: pointer;
+      font-size: 14px;
+      color: #4a5568;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      transition: background 0.2s ease;
+      border-bottom: 1px solid #f1f5f9;
+    }
+    
+    .dropdown-item:last-child {
+      border-bottom: none;
+    }
+    
+    .dropdown-item:hover {
+      background: #f8fafc;
+    }
+    
+    .dropdown-item.logout-btn {
+      color: #e53e3e;
+      border-top: 1px solid #e2e8f0;
+    }
+    
+    /* Settings Button */
+    .settings-btn {
+      background: transparent;
+      border: none;
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      color: #718096;
+      transition: all 0.3s ease;
+      position: relative;
+    }
+    
+    .settings-btn:hover {
+      background: rgba(102, 126, 234, 0.1);
+      color: var(--primary);
+    }
+    
+    .settings-dropdown {
+      position: absolute;
+      top: 100%;
+      right: 0;
+      background: white;
+      border-radius: 8px;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+      min-width: 200px;
+      margin-top: 10px;
+      overflow: hidden;
+      z-index: 1001;
+      display: none;
+    }
+    
+    .settings-dropdown.show {
+      display: block;
+      animation: fadeIn 0.2s ease;
+    }
+    
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(-10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    
+    /* Main Content */
+    .main {
+      flex: 1;
+      overflow-y: auto;
+      padding: 25px;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      min-height: calc(100vh - 70px);
+    }
+    
+    .page-container {
+      background: white;
+      border-radius: 12px;
+      padding: 30px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+      margin-bottom: 25px;
+      animation: slideUp 0.3s ease;
+    }
+    
+    @keyframes slideUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    
+    .page-title {
+      color: var(--dark);
+      margin-bottom: 25px;
+      font-size: 24px;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    
+    /* Dashboard Cards */
+    .stats-cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 20px;
+      margin-bottom: 30px;
+    }
+    
+    .stat-card {
+      background: white;
+      border-radius: 12px;
+      padding: 20px;
+      box-shadow: 0 3px 10px rgba(0,0,0,0.05);
+      border-left: 5px solid var(--primary);
+      transition: all 0.3s;
+      height: 100%;
+    }
+    
+    .stat-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+    }
+    
+    .stat-card:nth-child(2) {
+      border-left-color: #f5576c;
+    }
+    
+    .stat-card:nth-child(3) {
+      border-left-color: #00f2fe;
+    }
+    
+    .stat-card:nth-child(4) {
+      border-left-color: #38f9d7;
+    }
+    
+    .stat-card h6 {
+      color: #7f8c8d;
+      font-weight: 600;
+      margin-bottom: 10px;
+      font-size: 0.9rem;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    
+    .stat-card h3 {
+      color: var(--dark);
+      font-weight: 800;
+      margin: 0;
+      font-size: 1.8rem;
+    }
+    
+    /* Recent Transactions Table */
+    .card {
+      border: none;
+      border-radius: 12px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+      margin-bottom: 25px;
+      transition: transform 0.2s;
+    }
+    
+    .card:hover {
+      transform: translateY(-2px);
+    }
+    
+    .card-header {
+      background: white;
+      border-bottom: 1px solid #eee;
+      padding: 18px 25px;
+      font-weight: 700;
+      color: var(--dark);
+      border-radius: 12px 12px 0 0 !important;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    
+    .card-header.bg-gradient-primary {
+      background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%) !important;
+      color: white;
+    }
+    
+    .table {
+      margin: 0;
+    }
+    
+    .table thead th {
+      background: #f8f9fa;
+      border-bottom: 2px solid #dee2e6;
+      font-weight: 700;
+      color: var(--dark);
+      padding: 12px 15px;
+      font-size: 0.85rem;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    
+    .table tbody td {
+      padding: 12px 15px;
+      vertical-align: middle;
+      border-color: #eee;
+    }
+    
+    .table-hover tbody tr:hover {
+      background-color: rgba(102, 126, 234, 0.05);
+    }
+    
+    /* Form Styles */
+    .form-label {
+      font-weight: 600;
+      color: var(--dark);
+      margin-bottom: 8px;
+      font-size: 0.9rem;
+    }
+    
+    .form-control, .form-select {
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      padding: 10px 15px;
+      font-size: 0.9rem;
+      transition: all 0.3s;
+    }
+    
+    .form-control:focus, .form-select:focus {
+      border-color: var(--primary);
+      box-shadow: 0 0 0 0.2rem rgba(102, 126, 234, 0.25);
+    }
+    
+    /* Auto-complete */
+    .autocomplete-container {
+      position: relative;
+    }
+    
+    .autocomplete-items {
+      position: absolute;
+      border: 1px solid #ddd;
+      border-top: none;
+      background: white;
+      z-index: 1000;
+      width: 100%;
+      max-height: 200px;
+      overflow-y: auto;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      border-radius: 0 0 8px 8px;
+    }
+    
+    .autocomplete-item {
+      padding: 10px 15px;
+      cursor: pointer;
+      border-bottom: 1px solid #f5f5f5;
+      display: flex;
+      flex-direction: column;
+    }
+    
+    .autocomplete-item:hover {
+      background: #f8f9fa;
+    }
+    
+    /* Section Title */
+    .section-title {
+      background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+      padding: 15px 20px;
+      font-weight: 700;
+      color: var(--dark);
+      border-radius: 8px;
+      margin-bottom: 20px;
+      border-left: 5px solid var(--primary);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    
+    /* Buttons */
+    .btn {
+      border-radius: 8px;
+      padding: 10px 20px;
+      font-weight: 600;
+      font-size: 0.9rem;
+      transition: all 0.3s;
+      border: none;
+    }
+    
+    .btn-primary {
+      background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+      border: none;
+    }
+    
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
+    }
+    
+    .btn-success {
+      background: linear-gradient(135deg, #27ae60 0%, #2ecc71 100%);
+      border: none;
+    }
+    
+    /* Toast Notification */
+    #toast {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      padding: 15px 25px;
+      border-radius: 10px;
+      color: white;
+      display: none;
+      z-index: 10000;
+      font-weight: 600;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+      animation: slideIn 0.3s ease;
+    }
+    
+    @keyframes slideIn {
+      from { transform: translateX(100%); opacity: 0; }
+      to { transform: translateX(0); opacity: 1; }
+    }
+    
+    /* Page System */
+    .page {
+      display: none;
+      animation: fadeIn 0.3s ease;
+    }
+    
+    .active-page {
+      display: block;
+    }
+    
+    /* Badges */
+    .badge {
+      padding: 5px 10px;
+      border-radius: 20px;
+      font-size: 0.75rem;
+      font-weight: 600;
+    }
+    
+    /* Responsive */
+    @media (max-width: 992px) {
+      .sidebar {
+        width: 60px;
+      }
+      
+      .sidebar-header h2,
+      .nav-item span,
+      .sidebar-header .subtitle {
+        display: none;
+      }
+      
+      .nav-item {
+        justify-content: center;
+        padding: 15px;
+      }
+      
+      .nav-item i {
+        font-size: 1.3rem;
+      }
+      
+      .top-menu {
+        display: none;
+      }
+      
+      .user-info {
+        display: none;
+      }
+    }
+    
+    @media (max-width: 768px) {
+      .main {
+        padding: 15px;
+      }
+      
+      .page-container {
+        padding: 20px;
+      }
+      
+      .stats-cards {
+        grid-template-columns: 1fr;
+      }
+      
+      .topbar {
+        padding: 0 15px;
+      }
+      
+      .topbar-title {
+        font-size: 1rem;
+      }
+    }
+    
+    /* Loading Spinner */
+    .loading-spinner {
+      display: inline-block;
+      width: 20px;
+      height: 20px;
+      border: 3px solid #f3f3f3;
+      border-top: 3px solid var(--primary);
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+    }
+    
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+
+    /* Data Tables */
+    .data-table-wrapper {
+      overflow-x: auto;
+      margin-top: 20px;
+    }
+
+    .data-table {
+      min-width: 1200px;
+    }
+
+    /* Pagination */
+    .pagination-container {
+      display: flex;
+      justify-content: center;
+      margin-top: 20px;
+    }
+
+    .pagination-btn {
+      margin: 0 5px;
+      min-width: 40px;
+    }
+
+    /* Filter Controls */
+    .filter-controls {
+      background: #f8f9fa;
+      padding: 15px;
+      border-radius: 8px;
+      margin-bottom: 20px;
+    }
+
+    /* Status Indicators */
+    .status-paid {
+      color: var(--success);
+      font-weight: 600;
+    }
+
+    .status-due {
+      color: var(--danger);
+      font-weight: 600;
+    }
+
+    .status-pending {
+      color: var(--warning);
+      font-weight: 600;
+    }
+
+    /* Work Entry Form Styles */
+    .label-icon {
+      margin-right: 8px;
+      color: var(--primary);
+    }
+    
+    .readonly {
+      background-color: #f8f9fa;
+    }
+    
+    .due {
+      background-color: #fff5f5;
+      color: #e53e3e;
+      font-weight: bold;
+    }
+    
+    .btn-save {
+      padding: 12px 40px;
+      font-size: 1.1rem;
+    }
+    
+    /* BDIR Form Styles */
+    .app-container {
+      max-width: 100%;
+      margin: 0 auto;
+      padding: 20px;
+      background: #fff;
+      border-radius: 10px;
+      box-shadow: 0 0 15px rgba(0,0,0,0.05);
+    }
+    
+    .section-header {
+      background: #4a6fa5;
+      color: white;
+      padding: 12px 15px;
+      margin: 25px 0 15px;
+      border-radius: 8px;
+      font-weight: bold;
+      font-size: 16px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    
+    .sync-btn {
+      background: #28a745;
+      color: white;
+      border: none;
+      padding: 5px 12px;
+      border-radius: 5px;
+      font-size: 14px;
+      cursor: pointer;
+    }
+    
+    .sync-btn:hover {
+      background: #218838;
+    }
+    
+    .footer-btns {
+      display: flex;
+      justify-content: center;
+      gap: 15px;
+      margin-top: 30px;
+      padding-top: 20px;
+      border-top: 1px solid #ddd;
+    }
+    
+    .btn-preview {
+      background: #007bff;
+      color: white;
+      border: none;
+      padding: 10px 25px;
+      border-radius: 8px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+    
+    .btn-reset {
+      background: #6c757d;
+      color: white;
+      border: none;
+      padding: 10px 25px;
+      border-radius: 8px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+    
+    .btn-png, .btn-doc, .btn-pdf {
+      background: #17a2b8;
+      color: white;
+      border: none;
+      padding: 8px 15px;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 14px;
+    }
+    
+    .btn-pdf {
+      background: #dc3545;
+    }
+    
+    .btn-doc {
+      background: #28a745;
+    }
+    
+    .eng-input {
+      text-transform: uppercase;
+    }
+    
+    #preview-section {
+      display: none;
+      background: white;
+      padding: 25px;
+      border-radius: 10px;
+      margin-top: 20px;
+      box-shadow: 0 0 15px rgba(0,0,0,0.08);
+    }
+    
+    .pv-sub-head {
+      background: #e9ecef;
+      padding: 10px 15px;
+      margin: 20px 0 10px;
+      border-left: 4px solid #4a6fa5;
+      font-weight: bold;
+      border-radius: 4px;
+    }
+    
+    .pv-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-bottom: 25px;
+    }
+    
+    .pv-table tr {
+      border-bottom: 1px solid #eee;
+    }
+    
+    .pv-table td {
+      padding: 10px 12px;
+      vertical-align: top;
+    }
+    
+    .pv-label {
+      width: 30%;
+      font-weight: bold;
+      background: #f8f9fa;
+    }
+    
+    .eng-text {
+      font-family: 'Courier New', monospace;
+      color: #333;
+    }
+    
+    /* Work Entry Custom Styles */
+    .form-label {
+      display: flex;
+      align-items: center;
+    }
+    
+    .form-control:read-only {
+      background-color: #f8f9fa;
+    }
+  </style>
+</head>
+<body>
+  <div id="root">
+    <!-- Sidebar -->
+    <div class="sidebar">
+      <div class="sidebar-header">
+        <h2>JOHAN SHOP</h2>
+        <div class="subtitle">ERP Enterprise v6.0</div>
+      </div>
+      
+      <button class="nav-item active" onclick="showPage('dashboard', this)">
+        <i class="bi bi-speedometer2"></i>
+        <span>Dashboard</span>
+      </button>
+      
+      <button class="nav-item" onclick="showPage('work-entry', this)">
+        <i class="bi bi-pencil-square"></i>
+        <span>Work Entry</span>
+      </button>
+      
+      <button class="nav-item" onclick="showPage('birth-entry', this)">
+        <i class="bi bi-baby"></i>
+        <span>Birth Registration</span>
+      </button>
+      
+      <button class="nav-item" onclick="showPage('customers', this)">
+        <i class="bi bi-people"></i>
+        <span>Customers</span>
+      </button>
+      
+      <button class="nav-item" onclick="showPage('payments', this)">
+        <i class="bi bi-cash-stack"></i>
+        <span>Payments</span>
+      </button>
+      
+      <button class="nav-item" onclick="showPage('reports', this)">
+        <i class="bi bi-bar-chart"></i>
+        <span>Reports</span>
+      </button>
+      
+      <button class="nav-item" onclick="showPage('users', this)">
+        <i class="bi bi-person-badge"></i>
+        <span>Users</span>
+      </button>
+      
+      <button class="nav-item" onclick="showPage('logs', this)">
+        <i class="bi bi-clock-history"></i>
+        <span>Activity Logs</span>
+      </button>
+    </div>
+
+    <!-- Main Content Area -->
+    <div class="content-area">
+      <!-- Top Bar -->
+      <div class="topbar">
+        <div class="topbar-left">
+          <div class="topbar-title">JOHAN SHOP</div>
+          <div class="top-menu">
+            <button class="top-menu-btn active" onclick="showPage('dashboard')">Dashboard</button>
+            <button class="top-menu-btn" onclick="showPage('work-entry')">Work Entry</button>
+            <button class="top-menu-btn" onclick="showPage('birth-entry')">Birth Registration</button>
+            <button class="top-menu-btn" onclick="showPage('customers')">Customers</button>
+            <button class="top-menu-btn" onclick="showPage('payments')">Payments</button>
+            <button class="top-menu-btn" onclick="showPage('reports')">Reports</button>
+          </div>
+        </div>
+        
+        <div class="topbar-right">
+          <div class="status-badge">
+            <i class="bi bi-check-circle-fill"></i>
+            <span id="connectionStatus">Connected</span>
+          </div>
+          
+          <!-- Settings Button -->
+          <div class="profile-section">
+            <button class="settings-btn" onclick="toggleSettingsDropdown()">
+              <i class="bi bi-gear"></i>
+            </button>
+            <div class="settings-dropdown" id="settingsDropdown">
+              <div class="dropdown-item" onclick="showSettings()">
+                <i class="bi bi-sliders"></i> System Settings
+              </div>
+              <div class="dropdown-item" onclick="showThemeSettings()">
+                <i class="bi bi-palette"></i> Theme Settings
+              </div>
+              <div class="dropdown-item" onclick="showNotificationSettings()">
+                <i class="bi bi-bell"></i> Notifications
+              </div>
+              <div class="dropdown-item" onclick="showBackupSettings()">
+                <i class="bi bi-cloud-arrow-up"></i> Backup & Restore
+              </div>
+              <div class="dropdown-item logout-btn" onclick="logout()">
+                <i class="bi bi-box-arrow-right"></i> Logout
+              </div>
+            </div>
+          </div>
+          
+          <!-- Profile Section -->
+          <div class="profile-section">
+            <button class="profile-btn" onclick="toggleProfileDropdown()">
+              <div class="profile-icon" id="profileIcon">A</div>
+              <div class="user-info">
+                <span class="user-name" id="userName">Admin User</span>
+                <span class="user-role" id="userRole">Administrator</span>
+              </div>
+              <i class="bi bi-chevron-down"></i>
+            </button>
+            <div class="profile-dropdown" id="profileDropdown">
+              <div class="dropdown-header">
+                <div class="profile-icon" id="dropdownProfileIcon">A</div>
+                <div class="user-info">
+                  <span class="user-name" id="dropdownUserName">Admin User</span>
+                  <span class="user-role" id="dropdownUserRole">Administrator</span>
+                </div>
+              </div>
+              <div class="dropdown-item" onclick="viewProfile()">
+                <i class="bi bi-person"></i> My Profile
+              </div>
+              <div class="dropdown-item" onclick="editProfile()">
+                <i class="bi bi-pencil"></i> Edit Profile
+              </div>
+              <div class="dropdown-item" onclick="changePassword()">
+                <i class="bi bi-shield-lock"></i> Change Password
+              </div>
+              <div class="dropdown-item" onclick="showMyActivity()">
+                <i class="bi bi-clock-history"></i> My Activity
+              </div>
+              <div class="dropdown-item logout-btn" onclick="logout()">
+                <i class="bi bi-box-arrow-right"></i> Logout
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Main Content -->
+      <div class="main">
+        <!-- ==================== DASHBOARD ==================== -->
+        <div id="dashboard" class="page active-page">
+          <div class="stats-cards">
+            <div class="stat-card">
+              <h6>Total Sales</h6>
+              <h3 id="totalSales">৳ 0</h3>
+              <div class="small text-muted mt-2">From EntryForm</div>
+            </div>
+            
+            <div class="stat-card">
+              <h6>Total Due</h6>
+              <h3 id="totalDue">৳ 0</h3>
+              <div class="small text-muted mt-2">Pending Collections</div>
+            </div>
+            
+            <div class="stat-card">
+              <h6>Birth Registrations</h6>
+              <h3 id="totalBirth">0</h3>
+              <div class="small text-muted mt-2">Total BDIR Applications</div>
+            </div>
+            
+            <div class="stat-card">
+              <h6>Total Customers</h6>
+              <h3 id="totalCustomers">0</h3>
+              <div class="small text-muted mt-2">Registered Customers</div>
+            </div>
+          </div>
+          
+          <div class="card">
+            <div class="card-header">
+              <span>Recent Work Entries</span>
+              <button class="btn btn-sm btn-outline-primary" onclick="refreshDashboard()">
+                <i class="bi bi-arrow-clockwise"></i> Refresh
+              </button>
+            </div>
+            <div class="card-body p-0">
+              <div class="table-responsive">
+                <table class="table table-hover mb-0">
+                  <thead>
+                    <tr>
+                      <th>📅 Date</th>
+                      <th>👤 Customer</th>
+                      <th>📱 Mobile</th>
+                      <th>🛠️ Type of Work</th>
+                      <th>💰 Total</th>
+                      <th>💵 Paid</th>
+                      <th>⏳ Due</th>
+                      <th>Status</th>
+                    </tr>
+                  </thead>
+                  <tbody id="recentEntriesTable">
+                    <tr>
+                      <td colspan="8" class="text-center py-4 text-muted">Loading data...</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ==================== WORK ENTRY ==================== -->
+        <div id="work-entry" class="page">
+          <div class="page-container">
+            <h2 class="page-title">
+              <i class="bi bi-pencil-square"></i>
+              New Work Entry
+            </h2>
+            
+            <div class="row g-3">
+              <!-- Customer & App Info -->
+              <div class="col-lg-4 col-md-6">
+                <div class="card h-100 shadow-sm">
+                  <div class="card-body">
+                    <h5><i class="bi bi-person"></i> Customer & App Info</h5>
+                    <div class="mt-3 row g-2">
+                      <div class="col-6">
+                        <label class="form-label"><i class="bi bi-hash label-icon"></i> ID</label>
+                        <input id="id" class="form-control" value="AUTO" readonly>
+                      </div>
+                      <div class="col-6">
+                        <label class="form-label"><i class="bi bi-calendar-event label-icon"></i> Date</label>
+                        <input id="date" type="date" class="form-control">
+                      </div>
+                      <div class="col-12">
+                        <label class="form-label"><i class="bi bi-card-text label-icon"></i> App No</label>
+                        <input id="appNo" class="form-control">
+                      </div>
+                      <div class="col-12">
+                        <label class="form-label"><i class="bi bi-person-badge label-icon"></i> Customer Name</label>
+                        <input id="name" class="form-control">
+                      </div>
+                      <div class="col-6">
+                        <label class="form-label"><i class="bi bi-telephone label-icon"></i> Mobile</label>
+                        <input id="mobile" class="form-control" inputmode="tel">
+                      </div>
+                      <div class="col-6">
+                        <label class="form-label"><i class="bi bi-envelope label-icon"></i> Email</label>
+                        <input id="email" type="email" class="form-control">
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Work & Payment -->
+              <div class="col-lg-4 col-md-6">
+                <div class="card h-100 shadow-sm">
+                  <div class="card-body">
+                    <h5><i class="bi bi-tools"></i> Work & Payment</h5>
+                    <div class="mt-3 row g-2">
+                      <div class="col-12">
+                        <label class="form-label"><i class="bi bi-briefcase label-icon"></i> Type of Work</label>
+                        <select id="workType" class="form-select">
+                          <option value="">Select Work</option>
+                          <option value="50">Computer Compose</option>
+                          <option value="200">Trade Lic App</option>
+                          <option value="200">Birth Apply</option>
+                          <option value="150">Job Apply</option>
+                          <option value="10">Print</option>
+                          <option value="other">Others</option>
+                        </select>
+                      </div>
+                      <div class="col-4">
+                        <label class="form-label"><i class="bi bi-currency-bitcoin label-icon"></i> Rate</label>
+                        <input id="rate" type="number" min="0" class="form-control" disabled>
+                      </div>
+                      <div class="col-4">
+                        <label class="form-label"><i class="bi bi-stack label-icon"></i> Qty</label>
+                        <input id="qty" type="number" min="1" class="form-control" value="1">
+                      </div>
+                      <div class="col-4">
+                        <label class="form-label"><i class="bi bi-credit-card-2-back label-icon"></i> Pay</label>
+                        <select id="payMethod" class="form-select">
+                          <option>Cash</option>
+                          <option>Bkash</option>
+                          <option>Nagad</option>
+                          <option>Bank</option>
+                        </select>
+                      </div>
+
+                      <div class="col-6">
+                        <label class="form-label"><i class="bi bi-cash-stack label-icon"></i> Total</label>
+                        <input id="total" class="form-control readonly" readonly>
+                      </div>
+                      <div class="col-6">
+                        <label class="form-label"><i class="bi bi-wallet2 label-icon"></i> Paid</label>
+                        <input id="paid" type="number" min="0" class="form-control">
+                      </div>
+                      <div class="col-12">
+                        <label class="form-label"><i class="bi bi-hourglass-split label-icon"></i> Due</label>
+                        <input id="due" class="form-control due" readonly>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Accounting -->
+              <div class="col-lg-4 col-md-12">
+                <div class="card h-100 shadow-sm">
+                  <div class="card-body">
+                    <h5><i class="bi bi-graph-up"></i> Accounting</h5>
+                    <div class="mt-3 row g-2">
+                      <div class="col-6"><label class="form-label"><i class="bi bi-bank2 label-icon"></i> Saving (5%)</label><input id="saving" class="form-control readonly" readonly></div>
+                      <div class="col-6"><label class="form-label"><i class="bi bi-moon-stars label-icon"></i> Zakat (2.5%)</label><input id="zakat" class="form-control readonly" readonly></div>
+                      <div class="col-6"><label class="form-label"><i class="bi bi-exclamation-triangle label-icon"></i> Damage (5%)</label><input id="damage" class="form-control readonly" readonly></div>
+                      <div class="col-6"><label class="form-label"><i class="bi bi-bar-chart-fill label-icon"></i> Income</label><input id="income" class="form-control readonly" readonly></div>
+                      <div class="col-12 mt-2"><label class="form-label"><i class="bi bi-info-circle label-icon"></i> Status</label><select id="status" class="form-select"><option>Pending</option><option>Completed</option></select></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="text-center mt-4">
+              <button id="saveBtn" class="btn btn-primary btn-lg btn-save" onclick="saveWorkEntry()">
+                <i class="bi bi-save"></i> Save Sheet
+              </button>
+              <button class="btn btn-secondary btn-lg ms-3" onclick="clearWorkEntryForm()">
+                <i class="bi bi-x-circle"></i> Clear
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- ==================== BIRTH REGISTRATION ==================== -->
+        <div id="birth-entry" class="page">
+          <div class="page-container">
+            <h2 class="page-title">
+              <i class="bi bi-baby"></i>
+              Birth Registration (BDIR)
+            </h2>
+            
+            <div class="app-container" id="input-form">
+              <div style="text-align: center; border-bottom: 2px solid #333; padding-bottom: 10px; margin-bottom: 20px;">
+                <h1 style="margin:0; font-size: 24px;">জন্ম নিবন্ধন আবেদনপত্র</h1>
+                <p style="margin:5px 0;">Birth Registration Application Form</p>
+              </div>
+
+              <!-- ১. নিবন্ধনাধীন ব্যক্তির পরিচিতি -->
+              <div class="section-header">১. নিবন্ধনাধীন ব্যক্তির পরিচিতি | 1. Particulars of the Person</div>
+              <div class="row">
+                <div class="col"><label class="form-label">নাম (বাংলায়):</label><input type="text" id="name_bn" class="form-control"></div>
+                <div class="col"><label class="form-label">Name in English (Capital):</label><input type="text" id="name_en" class="form-control eng-input"></div>
+              </div>
+              <div class="row mt-2">
+                <div class="col"><label class="form-label">জন্ম তারিখ:</label><input type="date" id="dob" class="form-control"></div>
+                <div class="col"><label class="form-label">পিতা-মাতার কততম সন্তান:</label><input type="number" id="child_order" class="form-control"></div>
+              </div>
+              <div class="row mt-2">
+                <div class="col"><label class="form-label">লিঙ্গ:</label>
+                  <select id="gender" class="form-select">
+                    <option>পুরুষ / Male</option>
+                    <option>মহিলা / Female</option>
+                    <option>তৃতীয় লিঙ্গ / Third Gender</option>
+                  </select>
+                </div>
+                <div class="col"><label class="form-label">জন্মস্থানের দেশ:</label><input type="text" id="birth_country" class="form-control eng-input" value="BANGLADESH"></div>
+              </div>
+
+              <!-- ২. পিতা ও মাতার বিবরণ -->
+              <div class="section-header">২. পিতা ও মাতার বিবরণ | 2. Information of Father and Mother</div>
+              <div class="row">
+                <div class="col"><label class="form-label">পিতার নাম (বাংলায়):</label><input type="text" id="fname_bn" class="form-control"></div>
+                <div class="col"><label class="form-label">Father's Name (EN):</label><input type="text" id="fname_en" class="form-control eng-input"></div>
+              </div>
+              <div class="row mt-2">
+                <div class="col"><label class="form-label">পিতার NID নম্বর:</label><input type="text" id="fnid" class="form-control"></div>
+                <div class="col"><label class="form-label">পিতার জন্ম নিবন্ধন নং:</label><input type="text" id="freg" class="form-control"></div>
+              </div>
+              <div class="row mt-2">
+                <div class="col"><label class="form-label">পাসপোর্ট নং (পিতা বিদেশী হলে):</label><input type="text" id="fpass" class="form-control"></div>
+                <div class="col"><label class="form-label">জাতীয়তা (পিতা):</label><input type="text" id="fnat" class="form-control" value="বাংলাদেশী"></div>
+              </div>
+              <hr class="my-3">
+              <div class="row">
+                <div class="col"><label class="form-label">মাতার নাম (বাংলায়):</label><input type="text" id="mname_bn" class="form-control"></div>
+                <div class="col"><label class="form-label">Mother's Name (EN):</label><input type="text" id="mname_en" class="form-control eng-input"></div>
+              </div>
+              <div class="row mt-2">
+                <div class="col"><label class="form-label">মাতার জন্ম নিবন্ধন নং:</label><input type="text" id="mreg" class="form-control"></div>
+                <div class="col"><label class="form-label">মাতার NID নম্বর:</label><input type="text" id="mnid" class="form-control"></div>
+              </div>
+              <div class="row mt-2">
+                <div class="col"><label class="form-label">পাসপোর্ট নং (মাতা - বিদেশী হলে):</label><input type="text" id="mpass" class="form-control"></div>
+                <div class="col"><label class="form-label">জাতীয়তা (মাতা):</label><input type="text" id="mnat" class="form-control" value="বাংলাদেশী"></div>
+              </div>
+
+              <!-- ৩. জন্মস্থানের ঠিকানা -->
+              <div class="section-header">৩. জন্মস্থানের ঠিকানা | 3. Place of Birth Address</div>
+              <div class="row">
+                <div class="col"><label class="form-label">বাসা ও সড়ক (বাংলা):</label><input type="text" id="b_rd_bn" class="form-control"></div>
+                <div class="col"><label class="form-label">House / Road (EN):</label><input type="text" id="b_rd_en" class="form-control eng-input"></div>
+              </div>
+              <div class="row mt-2">
+                <div class="col"><label class="form-label">গ্রাম / পাড়া (বাংলা):</label><input type="text" id="b_vl_bn" class="form-control"></div>
+                <div class="col"><label class="form-label">Village / Area (EN):</label><input type="text" id="b_vl_en" class="form-control eng-input"></div>
+              </div>
+              <div class="row mt-2">
+                <div class="col"><label class="form-label">ইউনিয়ন / ওয়ার্ড (বাংলা):</label><input type="text" id="b_un_bn" class="form-control"></div>
+                <div class="col"><label class="form-label">Union / Ward (EN):</label><input type="text" id="b_un_en" class="form-control eng-input"></div>
+              </div>
+              <div class="row mt-2">
+                <div class="col"><label class="form-label">ডাকঘর (বাংলা):</label><input type="text" id="b_po_bn" class="form-control"></div>
+                <div class="col"><label class="form-label">Post Office (EN):</label><input type="text" id="b_po_en" class="form-control eng-input"></div>
+              </div>
+              <div class="row mt-2">
+                <div class="col"><label class="form-label">পোস্ট কোড (বাংলা):</label><input type="text" id="b_pc_bn" class="form-control"></div>
+                <div class="col"><label class="form-label">Post Code (EN):</label><input type="text" id="b_pc_en" class="form-control eng-input"></div>
+              </div>
+              <div class="row mt-2">
+                <div class="col"><label class="form-label">উপজেলা (বাংলা):</label><input type="text" id="b_uz_bn" class="form-control"></div>
+                <div class="col"><label class="form-label">Upazila (EN):</label><input type="text" id="b_uz_en" class="form-control eng-input"></div>
+              </div>
+              <div class="row mt-2">
+                <div class="col"><label class="form-label">জেলা (বাংলা):</label><input type="text" id="b_ds_bn" class="form-control"></div>
+                <div class="col"><label class="form-label">District (EN):</label><input type="text" id="b_ds_en" class="form-control eng-input"></div>
+              </div>
+
+              <!-- ৪. স্থায়ী ঠিকানা -->
+              <div class="section-header">
+                ৪. স্থায়ী ঠিকানা | 4. Permanent Address
+                <button class="sync-btn" onclick="syncAddress('b', 'p')">জন্মস্থান ও স্থায়ী এক</button>
+              </div>
+              <div class="row">
+                <div class="col"><label class="form-label">বাসা ও সড়ক (বাংলা):</label><input type="text" id="p_rd_bn" class="form-control"></div>
+                <div class="col"><label class="form-label">House / Road (EN):</label><input type="text" id="p_rd_en" class="form-control eng-input"></div>
+              </div>
+              <div class="row mt-2">
+                <div class="col"><label class="form-label">গ্রাম / পাড়া (বাংলা):</label><input type="text" id="p_vl_bn" class="form-control"></div>
+                <div class="col"><label class="form-label">Village / Area (EN):</label><input type="text" id="p_vl_en" class="form-control eng-input"></div>
+              </div>
+              <div class="row mt-2">
+                <div class="col"><label class="form-label">ইউনিয়ন / ওয়ার্ড (বাংলা):</label><input type="text" id="p_un_bn" class="form-control"></div>
+                <div class="col"><label class="form-label">Union / Ward (EN):</label><input type="text" id="p_un_en" class="form-control eng-input"></div>
+              </div>
+              <div class="row mt-2">
+                <div class="col"><label class="form-label">ডাকঘর (বাংলা):</label><input type="text" id="p_po_bn" class="form-control"></div>
+                <div class="col"><label class="form-label">Post Office (EN):</label><input type="text" id="p_po_en" class="form-control eng-input"></div>
+              </div>
+              <div class="row mt-2">
+                <div class="col"><label class="form-label">পোস্ট কোড (বাংলা):</label><input type="text" id="p_pc_bn" class="form-control"></div>
+                <div class="col"><label class="form-label">Post Code (EN):</label><input type="text" id="p_pc_en" class="form-control eng-input"></div>
+              </div>
+              <div class="row mt-2">
+                <div class="col"><label class="form-label">উপজেলা (বাংলা):</label><input type="text" id="p_uz_bn" class="form-control"></div>
+                <div class="col"><label class="form-label">Upazila (EN):</label><input type="text" id="p_uz_en" class="form-control eng-input"></div>
+              </div>
+              <div class="row mt-2">
+                <div class="col"><label class="form-label">জেলা (বাংলা):</label><input type="text" id="p_ds_bn" class="form-control"></div>
+                <div class="col"><label class="form-label">District (EN):</label><input type="text" id="p_ds_en" class="form-control eng-input"></div>
+              </div>
+
+              <!-- ৫. বর্তমান ঠিকানা -->
+              <div class="section-header">
+                ৫. বর্তমান ঠিকানা | 5. Present Address
+                <button class="sync-btn" onclick="syncAddress('p', 'c')">স্থায়ী ও বর্তমান এক</button>
+              </div>
+              <div class="row">
+                <div class="col"><label class="form-label">বাসা ও সড়ক (বাংলা):</label><input type="text" id="c_rd_bn" class="form-control"></div>
+                <div class="col"><label class="form-label">House / Road (EN):</label><input type="text" id="c_rd_en" class="form-control eng-input"></div>
+              </div>
+              <div class="row mt-2">
+                <div class="col"><label class="form-label">গ্রাম / পাড়া (বাংলা):</label><input type="text" id="c_vl_bn" class="form-control"></div>
+                <div class="col"><label class="form-label">Village / Area (EN):</label><input type="text" id="c_vl_en" class="form-control eng-input"></div>
+              </div>
+              <div class="row mt-2">
+                <div class="col"><label class="form-label">ইউনিয়ন / ওয়ার্ড (বাংলা):</label><input type="text" id="c_un_bn" class="form-control"></div>
+                <div class="col"><label class="form-label">Union / Ward (EN):</label><input type="text" id="c_un_en" class="form-control eng-input"></div>
+              </div>
+              <div class="row mt-2">
+                <div class="col"><label class="form-label">ডাকঘর (বাংলা):</label><input type="text" id="c_po_bn" class="form-control"></div>
+                <div class="col"><label class="form-label">Post Office (EN):</label><input type="text" id="c_po_en" class="form-control eng-input"></div>
+              </div>
+              <div class="row mt-2">
+                <div class="col"><label class="form-label">পোস্ট কোড (বাংলা):</label><input type="text" id="c_pc_bn" class="form-control"></div>
+                <div class="col"><label class="form-label">Post Code (EN):</label><input type="text" id="c_pc_en" class="form-control eng-input"></div>
+              </div>
+              <div class="row mt-2">
+                <div class="col"><label class="form-label">উপজেলা (বাংলা):</label><input type="text" id="c_uz_bn" class="form-control"></div>
+                <div class="col"><label class="form-label">Upazila (EN):</label><input type="text" id="c_uz_en" class="form-control eng-input"></div>
+              </div>
+              <div class="row mt-2">
+                <div class="col"><label class="form-label">জেলা (বাংলা):</label><input type="text" id="c_ds_bn" class="form-control"></div>
+                <div class="col"><label class="form-label">District (EN):</label><input type="text" id="c_ds_en" class="form-control eng-input"></div>
+              </div>
+
+              <!-- ৬. আবেদনকারীর যোগাযোগ -->
+              <div class="section-header">৬. আবেদনকারীর যোগাযোগ | 6. Applicant Contact</div>
+              <div class="row">
+                <div class="col"><label class="form-label">মোবাইল নং:</label><input type="text" id="bd_mob" class="form-control" placeholder="017XXXXXXXX"></div>
+                <div class="col"><label class="form-label">ইমেইল:</label><input type="email" id="bd_email" class="form-control" placeholder="example@gmail.com"></div>
+              </div>
+
+              <div class="footer-btns">
+                <button class="btn btn-preview" onclick="showPreview()">Preview Information</button>
+                <button class="btn btn-primary" onclick="saveBDIREntry()">
+                  <i class="bi bi-save"></i> Save BDIR Entry
+                </button>
+                <button class="btn btn-reset" onclick="clearBDIRForm()">Reset</button>
+              </div>
+            </div>
+
+            <!-- Preview Section -->
+            <div id="preview-section" style="display: none;">
+              <div style="text-align: center; border-bottom: 2px solid #000; padding-bottom: 10px;">
+                <h2 style="margin:0;">জন্ম নিবন্ধন আবেদনপত্র - বিস্তারিত রেকর্ড</h2>
+                <p>Birth Registration Application - Detail Record</p>
+              </div>
+              <div id="pv-body"></div>
+              <div class="footer-btns" id="action-btns">
+                <button class="btn btn-reset" onclick="hidePreview()">Edit Info</button>
+                <button class="btn btn-png" onclick="dlPNG()">Save as PNG</button>
+                <button class="btn btn-doc" onclick="dlDOC()">Save as DOC</button>
+                <button class="btn btn-pdf" onclick="window.print()">Print / PDF</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ==================== CUSTOMERS ==================== -->
+        <div id="customers" class="page">
+          <div class="page-container">
+            <div class="section-title">
+              <div>
+                <h2 class="page-title mb-0">
+                  <i class="bi bi-people"></i>
+                  Customers Management
+                </h2>
+              </div>
+              <button class="btn btn-success btn-sm" onclick="showAddCustomerModal()">
+                <i class="bi bi-person-plus"></i> Add New Customer
+              </button>
+            </div>
+            
+            <div class="filter-controls">
+              <div class="row g-3">
+                <div class="col-md-6">
+                  <label class="form-label">🔍 Search Customers</label>
+                  <input type="text" class="form-control" id="searchCustomer" 
+                         placeholder="Search by name, mobile or email..." 
+                         onkeyup="filterCustomers()">
+                </div>
+                <div class="col-md-3">
+                  <label class="form-label">📅 From Date</label>
+                  <input type="date" class="form-control" id="regDateFrom" onchange="filterCustomers()">
+                </div>
+                <div class="col-md-3">
+                  <label class="form-label">📅 To Date</label>
+                  <input type="date" class="form-control" id="regDateTo" onchange="filterCustomers()">
+                </div>
+              </div>
+            </div>
+            
+            <div class="card">
+              <div class="card-header bg-gradient-primary">
+                <span>👥 Customers List (Customers Sheet)</span>
+              </div>
+              <div class="card-body p-0">
+                <div class="data-table-wrapper">
+                  <table class="table table-hover data-table mb-0">
+                    <thead>
+                      <tr>
+                        <th style="width: 10%;">🆔 ID</th>
+                        <th style="width: 15%;">👤 Name</th>
+                        <th style="width: 12%;">📱 Mobile</th>
+                        <th style="width: 18%;">📧 Email</th>
+                        <th style="width: 15%;">🏠 Address</th>
+                        <th style="width: 12%;">📝 Note</th>
+                        <th style="width: 12%;">📅 Reg Date</th>
+                        <th style="width: 6%;">⚙️</th>
+                      </tr>
+                    </thead>
+                    <tbody id="customersTable">
+                      <tr>
+                        <td colspan="8" class="text-center py-5 text-muted">
+                          <i class="bi bi-inbox" style="font-size: 2rem;"></i><br>
+                          Loading customers...
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+                
+                <div class="pagination-container py-3 border-top">
+                  <button class="btn btn-sm btn-outline-primary pagination-btn" onclick="prevPage('customers')">
+                    <i class="bi bi-chevron-left"></i> Previous
+                  </button>
+                  <span class="mx-3 fw-bold" id="customersPageInfo">Page 1 of 1</span>
+                  <button class="btn btn-sm btn-outline-primary pagination-btn" onclick="nextPage('customers')">
+                    Next <i class="bi bi-chevron-right"></i>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ==================== PAYMENTS ==================== -->
+        <div id="payments" class="page">
+          <div class="page-container">
+            <div class="section-title">
+              <div>
+                <h2 class="page-title mb-0">
+                  <i class="bi bi-cash-stack"></i>
+                  Payments Management
+                </h2>
+              </div>
+              <button class="btn btn-success btn-sm" onclick="showAddPaymentModal()">
+                <i class="bi bi-plus-circle"></i> Add Payment
+              </button>
+            </div>
+            
+            <div class="filter-controls">
+              <div class="row g-3">
+                <div class="col-md-4">
+                  <label class="form-label">🔍 Search Payment</label>
+                  <input type="text" class="form-control" id="searchPayment" 
+                         placeholder="Search by customer or payment ID..." onkeyup="filterPayments()">
+                </div>
+                <div class="col-md-4">
+                  <label class="form-label">📅 From Date</label>
+                  <input type="date" class="form-control" id="paymentDateFrom" onchange="filterPayments()">
+                </div>
+                <div class="col-md-4">
+                  <label class="form-label">📅 To Date</label>
+                  <input type="date" class="form-control" id="paymentDateTo" onchange="filterPayments()">
+                </div>
+              </div>
+            </div>
+            
+            <div class="card">
+              <div class="card-header bg-gradient-primary">
+                <span>💰 Payments List (Payments Sheet)</span>
+              </div>
+              <div class="card-body p-0">
+                <div class="data-table-wrapper">
+                  <table class="table table-hover data-table mb-0">
+                    <thead>
+                      <tr>
+                        <th style="width: 12%;">🆔 Payment ID</th>
+                        <th style="width: 12%;">📅 Date</th>
+                        <th style="width: 15%;">👤 Customer</th>
+                        <th style="width: 12%;">💳 Method</th>
+                        <th style="width: 12%;">💵 Received</th>
+                        <th style="width: 12%;">📥 Applied</th>
+                        <th style="width: 12%;">⏳ Remaining</th>
+                        <th style="width: 10%;">📝 Note</th>
+                        <th style="width: 3%;">⚙️</th>
+                      </tr>
+                    </thead>
+                    <tbody id="paymentsTable">
+                      <tr>
+                        <td colspan="9" class="text-center py-5 text-muted">
+                          <i class="bi bi-inbox" style="font-size: 2rem;"></i><br>
+                          Loading payments...
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+                
+                <div class="pagination-container py-3 border-top">
+                  <button class="btn btn-sm btn-outline-primary pagination-btn" onclick="prevPage('payments')">
+                    <i class="bi bi-chevron-left"></i> Previous
+                  </button>
+                  <span class="mx-3 fw-bold" id="paymentsPageInfo">Page 1 of 1</span>
+                  <button class="btn btn-sm btn-outline-primary pagination-btn" onclick="nextPage('payments')">
+                    Next <i class="bi bi-chevron-right"></i>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ==================== REPORTS ==================== -->
+        <div id="reports" class="page">
+          <div class="page-container">
+            <h2 class="page-title">
+              <i class="bi bi-bar-chart"></i>
+              Reports & Analytics
+            </h2>
+            
+            <div class="row mb-4 g-3">
+              <div class="col-md-3">
+                <div class="card border-0 shadow-sm">
+                  <div class="card-body">
+                    <label class="form-label fw-bold">📅 From Date</label>
+                    <input type="date" class="form-control" id="reportDateFrom" onchange="filterReports()">
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-3">
+                <div class="card border-0 shadow-sm">
+                  <div class="card-body">
+                    <label class="form-label fw-bold">📅 To Date</label>
+                    <input type="date" class="form-control" id="reportDateTo" onchange="filterReports()">
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-3">
+                <div class="card border-0 shadow-sm">
+                  <div class="card-body">
+                    <label class="form-label fw-bold">📊 Type</label>
+                    <select class="form-select" id="reportType" onchange="filterReports()">
+                      <option value="">All Reports</option>
+                      <option value="daily">Daily Report</option>
+                      <option value="weekly">Weekly Report</option>
+                      <option value="monthly">Monthly Report</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-3">
+                <div class="card border-0 shadow-sm">
+                  <div class="card-body d-flex flex-column justify-content-end h-100">
+                    <button class="btn btn-primary w-100 mb-2" onclick="generateReport()">
+                      <i class="bi bi-file-earmark-text"></i> Generate
+                    </button>
+                    <button class="btn btn-outline-primary w-100" onclick="exportReportCSV()">
+                      <i class="bi bi-download"></i> Export
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+            <div class="card">
+              <div class="card-header bg-gradient-primary">
+                <span>📈 Report Summary (Reports Sheet)</span>
+              </div>
+              <div class="card-body p-0">
+                <div class="data-table-wrapper">
+                  <table class="table table-hover data-table mb-0">
+                    <thead>
+                      <tr>
+                        <th style="width: 14%;">📅 Date</th>
+                        <th style="width: 12%;">🛠️ Total Work</th>
+                        <th style="width: 14%;">💰 Total Taka</th>
+                        <th style="width: 14%;">✅ Total Paid</th>
+                        <th style="width: 14%;">🚨 Total Due</th>
+                        <th style="width: 14%;">💵 Total Income</th>
+                        <th style="width: 14%;">⚖️ Remaining</th>
+                        <th style="width: 4%;">⚙️</th>
+                      </tr>
+                    </thead>
+                    <tbody id="reportsTable">
+                      <tr>
+                        <td colspan="8" class="text-center py-5 text-muted">
+                          <i class="bi bi-bar-chart" style="font-size: 2rem;"></i><br>
+                          No reports generated yet
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ==================== USERS ==================== -->
+        <div id="users" class="page">
+          <div class="page-container">
+            <div class="section-title">
+              <div>
+                <h2 class="page-title mb-0">
+                  <i class="bi bi-person-badge"></i>
+                  User Management
+                </h2>
+              </div>
+              <button class="btn btn-success btn-sm" onclick="showAddUserModal()">
+                <i class="bi bi-person-plus"></i> Add User
+              </button>
+            </div>
+            
+            <div class="card">
+              <div class="card-header bg-gradient-primary">
+                <span>👥 Users List (Users Sheet)</span>
+              </div>
+              <div class="card-body p-0">
+                <div class="data-table-wrapper">
+                  <table class="table table-hover data-table mb-0">
+                    <thead>
+                      <tr>
+                        <th style="width: 10%;">🆔 ID</th>
+                        <th style="width: 12%;">👤 Name</th>
+                        <th style="width: 15%;">📧 Email</th>
+                        <th style="width: 12%;">📞 Phone</th>
+                        <th style="width: 10%;">🔑 Pass</th>
+                        <th style="width: 10%;">🎖️ Role</th>
+                        <th style="width: 8%;">🖼️ Avatar</th>
+                        <th style="width: 10%;">📅 JoinDate</th>
+                        <th style="width: 10%;">🕒 LastLogin</th>
+                        <th style="width: 3%;">⚙️</th>
+                      </tr>
+                    </thead>
+                    <tbody id="usersTable">
+                      <tr>
+                        <td colspan="10" class="text-center py-5 text-muted">
+                          <i class="bi bi-inbox" style="font-size: 2rem;"></i><br>
+                          Loading users...
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+                
+                <div class="pagination-container py-3 border-top">
+                  <button class="btn btn-sm btn-outline-primary pagination-btn" onclick="prevPage('users')">
+                    <i class="bi bi-chevron-left"></i> Previous
+                  </button>
+                  <span class="mx-3 fw-bold" id="usersPageInfo">Page 1 of 1</span>
+                  <button class="btn btn-sm btn-outline-primary pagination-btn" onclick="nextPage('users')">
+                    Next <i class="bi bi-chevron-right"></i>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ==================== LOGS ==================== -->
+        <div id="logs" class="page">
+          <div class="page-container">
+            <h2 class="page-title">
+              <i class="bi bi-clock-history"></i>
+              Activity Logs
+            </h2>
+            
+            <div class="filter-controls">
+              <div class="row g-3">
+                <div class="col-md-4">
+                  <label class="form-label">Search</label>
+                  <input type="text" class="form-control" id="searchLog" 
+                         placeholder="Search by action or user...">
+                </div>
+                <div class="col-md-4">
+                  <label class="form-label">Date From</label>
+                  <input type="date" class="form-control" id="logDateFrom">
+                </div>
+                <div class="col-md-4">
+                  <label class="form-label">Date To</label>
+                  <input type="date" class="form-control" id="logDateTo">
+                </div>
+              </div>
+            </div>
+            
+            <div class="card">
+              <div class="card-header">
+                <span>Activity Logs (Logs!A:D)</span>
+              </div>
+              <div class="card-body p-0">
+                <div class="data-table-wrapper">
+                  <table class="table data-table">
+                    <thead>
+                      <tr>
+                        <th>🕒 Timestamp</th>
+                        <th>⚡ Action</th>
+                        <th>🔗 Reference</th>
+                        <th>👤 User</th>
+                        <th>Details</th>
+                      </tr>
+                    </thead>
+                    <tbody id="logsTable">
+                      <tr>
+                        <td colspan="5" class="text-center py-4 text-muted">Loading activity logs...</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast Notification -->
+  <div id="toast"></div>
+
+  <!-- JavaScript -->
+  <script>
+    // ==================== GLOBAL VARIABLES ====================
+    let currentPage = 'dashboard';
+    let currentCustomersPage = 1;
+    let currentPaymentsPage = 1;
+    let currentUsersPage = 1;
+    const itemsPerPage = 10;
+    let workEntriesData = [];
+    let bdirData = [];
+    let customersData = [];
+    let paymentsData = [];
+    let usersData = [];
+    let logsData = [];
+    let reportsData = [];
+
+    // Google Apps Script URL (Replace with your actual URL)
+    const scriptURL = 'https://script.google.com/macros/s/AKfycbxrBDnMEo0_nxVzCHMViAgb7uTxeKbPKLK0hs_xgU1b4PVHNHexV8n3ShsYP24cCCmG/exec';
+
+    // ==================== UTILITY FUNCTIONS ====================
+    function escapeHtml(text) {
+      if (typeof text !== 'string') return text;
+      return text
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#039;');
+    }
+
+    function formatCurrency(amount) {
+      return '৳ ' + parseFloat(amount || 0).toLocaleString('en-BD', {
+        minimumFractionDigits: 2,
+        maximumFractionDigits: 2
+      });
+    }
+
+    function formatDate(dateString) {
+      if (!dateString) return '';
+      const date = new Date(dateString);
+      return date.toLocaleDateString('en-GB');
+    }
+
+    // ==================== TOAST NOTIFICATION ====================
+    const toastManager = {
+      timeout: null,
+      show(message, type = 'success') {
+        clearTimeout(this.timeout);
+        const toast = document.getElementById('toast');
+        const colors = {
+          success: '#27ae60',
+          danger: '#e74c3c',
+          warning: '#f39c12',
+          info: '#3498db'
+        };
+        
+        toast.textContent = message;
+        toast.style.background = colors[type] || colors.success;
+        toast.style.display = 'block';
+        
+        this.timeout = setTimeout(() => {
+          toast.style.display = 'none';
+        }, 3000);
+      }
+    };
+
+    function notify(message, type = 'success') {
+      toastManager.show(message, type);
+    }
+
+    // ==================== GOOGLE SHEETS INTEGRATION ====================
+    async function fetchGoogleSheetsData(sheetName, range = 'all') {
+      try {
+        const response = await fetch(scriptURL, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            action: 'read',
+            sheet: sheetName,
+            range: range
+          })
+        });
+        
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        
+        const data = await response.json();
+        return data.data || [];
+      } catch (error) {
+        console.error('Error fetching data:', error);
+        notify('Error fetching data: ' + error.message, 'danger');
+        return [];
+      }
+    }
+
+    async function saveToGoogleSheets(range, data) {
+      try {
+        const payload = {
+          action: 'write',
+          range: range,
+          data: data
+        };
+        
+        console.log('Saving to Google Sheets:', payload);
+        
+        const response = await fetch(scriptURL, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload)
+        });
+        
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        
+        const result = await response.json();
+        console.log('Save result:', result);
+        
+        if (result.status === 'success') {
+          notify('✅ Data saved successfully!', 'success');
+          return true;
+        } else {
+          notify('❌ Error: ' + result.message, 'danger');
+          return false;
+        }
+      } catch (error) {
+        console.error('Error saving to Google Sheets:', error);
+        notify('❌ Network error: ' + error.message, 'danger');
+        return false;
+      }
+    }
+
+    async function saveWorkEntry() {
+      const customerName = document.getElementById('name').value.trim();
+      const mobile = document.getElementById('mobile').value.trim();
+      
+      if (!customerName) {
+        notify('Please enter customer name', 'danger');
+        return;
+      }
+      
+      if (!mobile) {
+        notify('Please enter mobile number', 'danger');
+        return;
+      }
+      
+      // Collect all form data
+      const entryData = [
+        document.getElementById('appNo').value,
+        '', // ID auto-generated
+        document.getElementById('date').value,
+        customerName,
+        mobile,
+        document.getElementById('email').value.trim(),
+        document.getElementById('payMethod').value,
+        document.getElementById('rate').value,
+        document.getElementById('qty').value,
+        document.getElementById('workType').options[document.getElementById('workType').selectedIndex].text,
+        document.getElementById('total').value,
+        document.getElementById('paid').value,
+        document.getElementById('due').value,
+        document.getElementById('saving').value,
+        document.getElementById('zakat').value,
+        document.getElementById('damage').value,
+        document.getElementById('income').value,
+        document.getElementById('status').value
+      ];
+      
+      // Save to Google Sheets
+      const result = await saveToGoogleSheets('EntryForm', [entryData]);
+      
+      if (result) {
+        clearWorkEntryForm();
+        logActivity('Work Entry', `Added work entry: ${entryData[0]}`, 'Admin');
+        
+        // Refresh dashboard if on dashboard
+        if (currentPage === 'dashboard') {
+          loadDashboardData();
+        }
+      }
+    }
+
+    async function saveBDIREntry() {
+      // Collect all BDIR form data
+      const bdirData = [
+        '', // ID auto-generated
+        new Date().toISOString().split('T')[0], // Date
+        document.getElementById('name_bn').value,
+        document.getElementById('name_en').value,
+        document.getElementById('dob').value,
+        document.getElementById('child_order').value,
+        document.getElementById('gender').value,
+        document.getElementById('fname_bn').value,
+        document.getElementById('fname_en').value,
+        document.getElementById('mname_bn').value,
+        document.getElementById('mname_en').value,
+        document.getElementById('bd_email').value,
+        document.getElementById('bd_mob').value,
+        document.getElementById('b_rd_bn').value + ', ' + document.getElementById('b_vl_bn').value + ', ' + document.getElementById('b_un_bn').value,
+        document.getElementById('b_rd_en').value + ', ' + document.getElementById('b_vl_en').value + ', ' + document.getElementById('b_un_en').value,
+        document.getElementById('fnid').value,
+        document.getElementById('freg').value,
+        document.getElementById('fpass').value,
+        document.getElementById('fnat').value,
+        document.getElementById('mnid').value,
+        document.getElementById('mreg').value,
+        document.getElementById('mpass').value,
+        document.getElementById('mnat').value,
+        document.getElementById('birth_country').value
+      ];
+      
+      // Save to Google Sheets
+      const result = await saveToGoogleSheets('BDIRSENTRY', [bdirData]);
+      
+      if (result) {
+        clearBDIRForm();
+        logActivity('BDIR Entry', `Added birth registration: ${bdirData[2]}`, 'Admin');
+        notify('✅ BDIR entry saved successfully!', 'success');
+      }
+    }
+
+    // ==================== PAGE MANAGEMENT ====================
+    function showPage(id, el = null) {
+      // Hide all pages
+      document.querySelectorAll('.page').forEach(p => p.classList.remove('active-page'));
+      
+      // Update sidebar
+      if (el) {
+        document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+        el.classList.add('active');
+      }
+      
+      // Update top menu
+      document.querySelectorAll('.top-menu-btn').forEach(btn => btn.classList.remove('active'));
+      const topMenuBtn = document.querySelector(`.top-menu-btn[onclick*="${id}"]`);
+      if (topMenuBtn) {
+        topMenuBtn.classList.add('active');
+      }
+      
+      // Show selected page
+      document.getElementById(id).classList.add('active-page');
+      currentPage = id;
+      
+      // Load page data
+      loadPageData(id);
+    }
+
+    function loadPageData(pageId) {
+      switch(pageId) {
+        case 'dashboard':
+          loadDashboardData();
+          break;
+        case 'work-entry':
+          loadWorkEntryData();
+          break;
+        case 'birth-entry':
+          loadBDIRData();
+          break;
+        case 'customers':
+          loadCustomers();
+          break;
+        case 'payments':
+          loadPayments();
+          break;
+        case 'reports':
+          loadReports();
+          break;
+        case 'users':
+          loadUsers();
+          break;
+        case 'logs':
+          loadLogs();
+          break;
+      }
+    }
+
+    // ==================== DASHBOARD ====================
+    async function loadDashboardData() {
+      try {
+        // Load work entries
+        workEntriesData = await fetchGoogleSheetsData('EntryForm');
+        
+        // Load BDIR entries
+        bdirData = await fetchGoogleSheetsData('BDIRSENTRY');
+        
+        // Load customers
+        customersData = await fetchGoogleSheetsData('Customers');
+        
+        updateDashboardStats();
+        updateRecentEntries();
+      } catch (error) {
+        console.error('Error loading dashboard data:', error);
+        notify('Error loading dashboard data', 'danger');
+      }
+    }
+
+    function updateDashboardStats() {
+      // Calculate totals
+      let totalSales = 0;
+      let totalDue = 0;
+      let totalBirth = bdirData.length;
+      let totalCustomers = customersData.length;
+      
+      workEntriesData.forEach(entry => {
+        const total = parseFloat(entry[10] || 0); // Total Taka column
+        const paid = parseFloat(entry[11] || 0); // Paid Amount column
+        const due = parseFloat(entry[12] || 0); // Due column
+        
+        totalSales += total;
+        totalDue += due;
+      });
+      
+      // Update UI
+      document.getElementById('totalSales').textContent = formatCurrency(totalSales);
+      document.getElementById('totalDue').textContent = formatCurrency(totalDue);
+      document.getElementById('totalBirth').textContent = totalBirth;
+      document.getElementById('totalCustomers').textContent = totalCustomers;
+    }
+
+    function updateRecentEntries() {
+      const tbody = document.getElementById('recentEntriesTable');
+      const recentEntries = workEntriesData.slice(-10).reverse(); // Last 10 entries
+      
+      if (recentEntries.length === 0) {
+        tbody.innerHTML = `
+          <tr>
+            <td colspan="8" class="text-center py-4 text-muted">No work entries found</td>
+          </tr>
+        `;
+        return;
+      }
+      
+      tbody.innerHTML = recentEntries.map(entry => `
+        <tr>
+          <td>${formatDate(entry[2])}</td>
+          <td><strong>${escapeHtml(entry[3] || 'N/A')}</strong></td>
+          <td>${escapeHtml(entry[4] || 'N/A')}</td>
+          <td><span class="badge bg-info">${escapeHtml(entry[9] || 'N/A')}</span></td>
+          <td class="fw-bold">${formatCurrency(entry[10])}</td>
+          <td class="status-paid">${formatCurrency(entry[11])}</td>
+          <td class="status-due">${formatCurrency(entry[12])}</td>
+          <td>
+            <span class="badge ${entry[17] === 'Completed' ? 'bg-success' : 
+                              entry[17] === 'Pending' ? 'bg-warning' : 
+                              entry[17] === 'In Progress' ? 'bg-info' : 'bg-secondary'}">
+              ${escapeHtml(entry[17] || 'Pending')}
+            </span>
+          </td>
+        </tr>
+      `).join('');
+    }
+
+    function refreshDashboard() {
+      loadDashboardData();
+      notify('Dashboard data refreshed', 'success');
+    }
+
+    // ==================== WORK ENTRY FORM ====================
+    function loadWorkEntryData() {
+      // Set today's date
+      const today = new Date().toISOString().split('T')[0];
+      document.getElementById('date').value = today;
+      
+      // Generate App No
+      document.getElementById('appNo').value = 'APPT/DNCC/-' + Date.now().toString().slice(-6);
+      
+      // Add event listeners
+      document.getElementById('workType').addEventListener('change', calculateWorkEntry);
+      document.getElementById('qty').addEventListener('input', calculateWorkEntry);
+      document.getElementById('paid').addEventListener('input', calculateWorkEntry);
+      
+      // Initial calculation
+      calculateWorkEntry();
+    }
+
+    function calculateWorkEntry() {
+      const workType = document.getElementById('workType');
+      const rateField = document.getElementById('rate');
+      const qty = parseFloat(document.getElementById('qty').value) || 1;
+      const paid = parseFloat(document.getElementById('paid').value) || 0;
+      
+      // Set rate based on work type
+      if (workType.value === 'other') {
+        rateField.disabled = false;
+        rateField.value = '';
+      } else {
+        rateField.disabled = true;
+        rateField.value = workType.value;
+      }
+      
+      const rate = parseFloat(rateField.value) || 0;
+      const total = rate * qty;
+      const due = total - paid;
+      
+      // Calculate accounting values (5% saving, 2.5% zakat, 5% damage)
+      const saving = total * 0.05;
+      const zakat = total * 0.025;
+      const damage = total * 0.05;
+      const income = total - saving - zakat - damage;
+      
+      // Update fields
+      document.getElementById('total').value = total.toFixed(2);
+      document.getElementById('due').value = due.toFixed(2);
+      document.getElementById('saving').value = saving.toFixed(2);
+      document.getElementById('zakat').value = zakat.toFixed(2);
+      document.getElementById('damage').value = damage.toFixed(2);
+      document.getElementById('income').value = income.toFixed(2);
+    }
+
+    function clearWorkEntryForm() {
+      document.getElementById('name').value = '';
+      document.getElementById('mobile').value = '';
+      document.getElementById('email').value = '';
+      document.getElementById('workType').value = '';
+      document.getElementById('rate').value = '';
+      document.getElementById('qty').value = '1';
+      document.getElementById('paid').value = '';
+      document.getElementById('status').value = 'Pending';
+      
+      const today = new Date().toISOString().split('T')[0];
+      document.getElementById('appNo').value = 'APPT/DNCC-' + Date.now().toString().slice(-6);
+      document.getElementById('date').value = today;
+      
+      calculateWorkEntry();
+      notify('Form cleared successfully', 'info');
+    }
+
+    // ==================== BIRTH REGISTRATION ====================
+    function loadBDIRData() {
+      // Set today's date
+      const today = new Date().toISOString().split('T')[0];
+      document.getElementById('dob').value = today;
+      
+      // Add uppercase transformation for English inputs
+      document.querySelectorAll('.eng-input').forEach(input => {
+        input.addEventListener('input', function() {
+          this.value = this.value.toUpperCase();
+        });
+      });
+      
+      // Add event listeners for mobile validation
+      document.getElementById('bd_mob').addEventListener('input', function() {
+        this.value = this.value.replace(/[^\d]/g, '').slice(0, 11);
+      });
+    }
+
+    function syncAddress(from, to) {
+      const items = ['rd_bn', 'rd_en', 'vl_bn', 'vl_en', 'un_bn', 'un_en', 
+                     'po_bn', 'po_en', 'pc_bn', 'pc_en', 'uz_bn', 'uz_en', 'ds_bn', 'ds_en'];
+      
+      items.forEach(item => {
+        const fromElement = document.getElementById(`${from}_${item}`);
+        const toElement = document.getElementById(`${to}_${item}`);
+        if (fromElement && toElement) {
+          toElement.value = fromElement.value;
+        }
+      });
+      
+      notify('Address synchronized successfully!', 'success');
+    }
+
+    function getValue(id) {
+      return document.getElementById(id).value || '---';
+    }
+
+    function getAddressBN(prefix) {
+      return `${getValue(prefix+'_rd_bn')}, ${getValue(prefix+'_vl_bn')}, ${getValue(prefix+'_un_bn')}, ${getValue(prefix+'_po_bn')}-${getValue(prefix+'_pc_bn')}, ${getValue(prefix+'_uz_bn')}, ${getValue(prefix+'_ds_bn')}`;
+    }
+
+    function getAddressEN(prefix) {
+      return `${getValue(prefix+'_rd_en')}, ${getValue(prefix+'_vl_en')}, ${getValue(prefix+'_un_en')}, ${getValue(prefix+'_po_en')}-${getValue(prefix+'_pc_en')}, ${getValue(prefix+'_uz_en')}, ${getValue(prefix+'_ds_en')}`;
+    }
+
+    function showPreview() {
+      const body = document.getElementById('pv-body');
+      body.innerHTML = `
+        <div class="pv-sub-head">১. নিবন্ধনাধীন ব্যক্তির পরিচিতি</div>
+        <table class="pv-table">
+          <tr><td class="pv-label">নাম (বাংলা):</td><td>${getValue('name_bn')}</td></tr>
+          <tr><td class="pv-label">Name (English):</td><td class="eng-text">${getValue('name_en')}</td></tr>
+          <tr><td class="pv-label">জন্ম তারিখ:</td><td>${getValue('dob')} (সন্তান নং: ${getValue('child_order')})</td></tr>
+          <tr><td class="pv-label">লিঙ্গ ও দেশ:</td><td>${getValue('gender')} | ${getValue('birth_country')}</td></tr>
+        </table>
+
+        <div class="pv-sub-head">২. পিতা ও মাতার বিবরণ</div>
+        <table class="pv-table">
+          <tr><td class="pv-label">পিতার নাম:</td><td>${getValue('fname_bn')} / <span class="eng-text">${getValue('fname_en')}</span></td></tr>
+          <tr><td class="pv-label">পিতার NID ও REG নং:</td><td>ID: ${getValue('fnid')} | REG: ${getValue('freg')}</td></tr>
+          <tr><td class="pv-label">পিতার পাসপোর্ট ও জাতীয়তা:</td><td>Passport: ${getValue('fpass')} | Nationality: ${getValue('fnat')}</td></tr>
+          <tr><td class="pv-label">মাতার নাম:</td><td>${getValue('mname_bn')} / <span class="eng-text">${getValue('mname_en')}</span></td></tr>
+          <tr><td class="pv-label">মাতার REG ও NID নং:</td><td>REG: ${getValue('mreg')} | ID: ${getValue('mnid')}</td></tr>
+          <tr><td class="pv-label">মাতার পাসপোর্ট ও জাতীয়তা:</td><td>Passport: ${getValue('mpass')} | Nationality: ${getValue('mnat')}</td></tr>
+        </table>
+
+        <div class="pv-sub-head">৩. ঠিকানার বিস্তারিত (Address Details)</div>
+        <table class="pv-table">
+          <tr><td rowspan="2" class="pv-label">জন্মস্থান:</td><td><strong>বাংলা:</strong> ${getAddressBN('b')}</td></tr>
+          <tr><td class="eng-text"><strong>English:</strong> ${getAddressEN('b')}</td></tr>
+          <tr><td rowspan="2" class="pv-label">স্থায়ী ঠিকানা:</td><td><strong>বাংলা:</strong> ${getAddressBN('p')}</td></tr>
+          <tr><td class="eng-text"><strong>English:</strong> ${getAddressEN('p')}</td></tr>
+          <tr><td rowspan="2" class="pv-label">বর্তমান ঠিকানা:</td><td><strong>বাংলা:</strong> ${getAddressBN('c')}</td></tr>
+          <tr><td class="eng-text"><strong>English:</strong> ${getAddressEN('c')}</td></tr>
+        </table>
+
+        <div class="pv-sub-head">৪. যোগাযোগ (Contact)</div>
+        <table class="pv-table">
+          <tr><td class="pv-label">মোবাইল ও ইমেইল:</td><td>${getValue('bd_mob')} | ${getValue('bd_email')}</td></tr>
+        </table>
+      `;
+      
+      document.getElementById('input-form').style.display = 'none';
+      document.getElementById('preview-section').style.display = 'block';
+      window.scrollTo(0, 0);
+    }
+
+    function hidePreview() {
+      document.getElementById('input-form').style.display = 'block';
+      document.getElementById('preview-section').style.display = 'none';
+    }
+
+    function clearBDIRForm() {
+      // Reset all BDIR form fields
+      const form = document.getElementById('input-form');
+      const inputs = form.querySelectorAll('input, select, textarea');
+      inputs.forEach(input => {
+        if (input.id === 'birth_country') {
+          input.value = 'BANGLADESH';
+        } else if (input.id === 'fnat' || input.id === 'mnat') {
+          input.value = 'বাংলাদেশী';
+        } else {
+          input.value = '';
+        }
+      });
+      
+      // Reset child order to 1
+      document.getElementById('child_order').value = '1';
+      
+      // Set today's date for DOB
+      const today = new Date().toISOString().split('T')[0];
+      document.getElementById('dob').value = today;
+      
+      notify('BDIR form cleared successfully', 'info');
+    }
+
+    function dlPNG() {
+      notify('PNG export functionality requires html2canvas library', 'info');
+      // Implementation would require html2canvas library
+    }
+
+    function dlDOC() {
+      const content = document.getElementById('pv-body').innerHTML;
+      const header = "<html xmlns:o='urn:schemas-microsoft-com:office:office' "+
+                     "xmlns:w='urn:schemas-microsoft-com:office:word' "+
+                     "xmlns='http://www.w3.org/TR/REC-html40'>"+
+                     "<head><meta charset='utf-8'><title>Export HTML to Word</title></head><body>";
+      const footer = "</body></html>";
+      const sourceHTML = header + content + footer;
+
+      const blob = new Blob(['\ufeff', sourceHTML], {
+        type: 'application/msword'
+      });
+
+      const link = document.createElement('a');
+      link.href = URL.createObjectURL(blob);
+      link.download = 'Birth_App_Info.doc';
+      link.click();
+      notify('Document exported successfully', 'success');
+    }
+
+    // ==================== CUSTOMERS MANAGEMENT ====================
+    async function loadCustomers() {
+      customersData = await fetchGoogleSheetsData('Customers');
+      displayCustomers();
+    }
+
+    function displayCustomers() {
+      const tbody = document.getElementById('customersTable');
+      const startIndex = (currentCustomersPage - 1) * itemsPerPage;
+      const endIndex = startIndex + itemsPerPage;
+      const currentCustomers = customersData.slice(startIndex, endIndex);
+      
+      if (currentCustomers.length === 0) {
+        tbody.innerHTML = `
+          <tr>
+            <td colspan="8" class="text-center py-4 text-muted">
+              <i class="bi bi-inbox"></i> No customers found
+            </td>
+          </tr>
+        `;
+        return;
+      }
+      
+      tbody.innerHTML = currentCustomers.map((customer, idx) => `
+        <tr>
+          <td><span class="badge bg-secondary">${escapeHtml(customer[0] || 'N/A')}</span></td>
+          <td><strong>${escapeHtml(customer[1] || 'N/A')}</strong></td>
+          <td><a href="tel:${customer[2]}">${escapeHtml(customer[2] || 'N/A')}</a></td>
+          <td><a href="mailto:${customer[3]}">${escapeHtml(customer[3] || 'N/A')}</a></td>
+          <td>${escapeHtml(customer[4] || 'N/A')}</td>
+          <td><small>${escapeHtml(customer[5] || '-')}</small></td>
+          <td>${formatDate(customer[6])}</td>
+          <td>
+            <div class="btn-group btn-group-sm" role="group">
+              <button type="button" class="btn btn-outline-info" onclick="editCustomer('${startIndex + idx + 2}')">
+                <i class="bi bi-pencil"></i>
+              </button>
+              <button type="button" class="btn btn-outline-danger" onclick="deleteCustomer('${startIndex + idx + 2}', '${escapeHtml(customer[0])}')">
+                <i class="bi bi-trash"></i>
+              </button>
+            </div>
+          </td>
+        </tr>
+      `).join('');
+      
+      // Update pagination
+      const totalPages = Math.ceil(customersData.length / itemsPerPage);
+      document.getElementById('customersPageInfo').textContent = 
+        `Page ${currentCustomersPage} of ${totalPages}`;
+    }
+
+    function filterCustomers() {
+      const searchTerm = document.getElementById('searchCustomer').value.toLowerCase();
+      const dateFrom = document.getElementById('regDateFrom').value;
+      const dateTo = document.getElementById('regDateTo').value;
+      
+      // Filter logic here
+      currentCustomersPage = 1;
+      displayCustomers();
+    }
+
+    function prevPage(type) {
+      if (type === 'customers' && currentCustomersPage > 1) {
+        currentCustomersPage--;
+        displayCustomers();
+      }
+      if (type === 'payments' && currentPaymentsPage > 1) {
+        currentPaymentsPage--;
+        displayPayments();
+      }
+      if (type === 'users' && currentUsersPage > 1) {
+        currentUsersPage--;
+        displayUsers();
+      }
+    }
+
+    function nextPage(type) {
+      const totalPages = (type === 'customers') ? Math.ceil(customersData.length / itemsPerPage) :
+                         (type === 'payments') ? Math.ceil(paymentsData.length / itemsPerPage) :
+                         (type === 'users') ? Math.ceil(usersData.length / itemsPerPage) : 1;
+      
+      if (type === 'customers' && currentCustomersPage < totalPages) {
+        currentCustomersPage++;
+        displayCustomers();
+      }
+      if (type === 'payments' && currentPaymentsPage < totalPages) {
+        currentPaymentsPage++;
+        displayPayments();
+      }
+      if (type === 'users' && currentUsersPage < totalPages) {
+        currentUsersPage++;
+        displayUsers();
+      }
+    }
+
+    function showAddCustomerModal() {
+      alert('Add new customer modal - To be implemented with proper form');
+    }
+
+    function editCustomer(rowIndex) {
+      alert(`Edit customer at row ${rowIndex} - To be implemented`);
+    }
+
+    function deleteCustomer(rowIndex, customerId) {
+      if (confirm(`Are you sure you want to delete customer ${customerId}?`)) {
+        notify(`Customer deleted successfully`, 'success');
+        loadCustomers();
+      }
+    }
+
+    // ==================== PAYMENTS MANAGEMENT ====================
+    async function loadPayments() {
+      try {
+        paymentsData = await fetchGoogleSheetsData('Payments');
+        displayPayments();
+      } catch (error) {
+        console.error('Error loading payments:', error);
+        notify('Error loading payments', 'danger');
+      }
+    }
+
+    function displayPayments() {
+      const tbody = document.getElementById('paymentsTable');
+      const startIndex = (currentPaymentsPage - 1) * itemsPerPage;
+      const endIndex = startIndex + itemsPerPage;
+      const currentPayments = paymentsData.slice(startIndex, endIndex);
+      
+      if (currentPayments.length === 0) {
+        tbody.innerHTML = `
+          <tr>
+            <td colspan="9" class="text-center py-4 text-muted">
+              <i class="bi bi-inbox"></i> No payments found
+            </td>
+          </tr>
+        `;
+        return;
+      }
+      
+      tbody.innerHTML = currentPayments.map((payment, idx) => `
+        <tr>
+          <td><span class="badge bg-primary">${escapeHtml(payment[0] || 'N/A')}</span></td>
+          <td>${formatDate(payment[1])}</td>
+          <td><strong>${escapeHtml(payment[2] || 'N/A')}</strong></td>
+          <td><span class="badge bg-light text-dark">${escapeHtml(payment[3] || 'N/A')}</span></td>
+          <td class="status-paid">${formatCurrency(payment[4])}</td>
+          <td class="status-paid">${formatCurrency(payment[5])}</td>
+          <td class="status-due">${formatCurrency(payment[6])}</td>
+          <td><small>${escapeHtml(payment[7] || '-')}</small></td>
+          <td>
+            <div class="btn-group btn-group-sm" role="group">
+              <button type="button" class="btn btn-outline-info" onclick="editPayment('${startIndex + idx + 2}')">
+                <i class="bi bi-pencil"></i>
+              </button>
+            </div>
+          </td>
+        </tr>
+      `).join('');
+      
+      // Update pagination
+      const totalPages = Math.ceil(paymentsData.length / itemsPerPage);
+      document.getElementById('paymentsPageInfo').textContent = 
+        `Page ${currentPaymentsPage} of ${totalPages}`;
+    }
+
+    function filterPayments() {
+      const searchTerm = document.getElementById('searchPayment').value.toLowerCase();
+      const dateFrom = document.getElementById('paymentDateFrom').value;
+      const dateTo = document.getElementById('paymentDateTo').value;
+      
+      // Filter logic here
+      currentPaymentsPage = 1;
+      displayPayments();
+    }
+
+    function showAddPaymentModal() {
+      alert('Add new payment modal - To be implemented');
+    }
+
+    function editPayment(rowIndex) {
+      alert(`Edit payment at row ${rowIndex} - To be implemented`);
+    }
+
+    // ==================== REPORTS ====================
+    async function loadReports() {
+      try {
+        reportsData = await fetchGoogleSheetsData('Reports');
+        displayReports();
+      } catch (error) {
+        console.error('Error loading reports:', error);
+      }
+    }
+
+    function displayReports() {
+      const tbody = document.getElementById('reportsTable');
+      
+      if (reportsData.length === 0) {
+        tbody.innerHTML = `
+          <tr>
+            <td colspan="8" class="text-center py-4 text-muted">
+              <i class="bi bi-bar-chart"></i> No reports generated yet
+            </td>
+          </tr>
+        `;
+        return;
+      }
+      
+      tbody.innerHTML = reportsData.map(report => `
+        <tr>
+          <td><strong>${formatDate(report[0])}</strong></td>
+          <td class="text-center"><span class="badge bg-info">${escapeHtml(report[1] || '0')}</span></td>
+          <td class="fw-bold">${formatCurrency(report[2])}</td>
+          <td class="status-paid">${formatCurrency(report[3])}</td>
+          <td class="status-due">${formatCurrency(report[4])}</td>
+          <td class="status-paid">${formatCurrency(report[5])}</td>
+          <td class="${parseFloat(report[6] || 0) >= 0 ? 'status-paid' : 'status-due'}">
+            ${formatCurrency(report[6])}
+          </td>
+          <td>
+            <button class="btn btn-sm btn-outline-info" onclick="viewReportDetails('${formatDate(report[0])}')">
+              <i class="bi bi-eye"></i>
+            </button>
+          </td>
+        </tr>
+      `).join('');
+    }
+
+    function filterReports() {
+      // Filter logic
+      loadReports();
+    }
+
+    function generateReport() {
+      notify('Report generation feature - To be implemented', 'info');
+    }
+
+    function exportReportCSV() {
+      if (reportsData.length === 0) {
+        notify('No data to export', 'warning');
+        return;
+      }
+      
+      const csv = 'Date,Total Work,Total Taka,Total Paid,Total Due,Total Income,Remaining\n' +
+        reportsData.map(r => `${r[0]},${r[1]},${r[2]},${r[3]},${r[4]},${r[5]},${r[6]}`).join('\n');
+      
+      const blob = new Blob([csv], { type: 'text/csv' });
+      const url = window.URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `Report_${new Date().toISOString().split('T')[0]}.csv`;
+      a.click();
+      
+      notify('Report exported successfully', 'success');
+    }
+
+    function viewReportDetails(date) {
+      alert(`View details for report: ${date}`);
+    }
+
+    // ==================== USERS MANAGEMENT ====================
+    async function loadUsers() {
+      try {
+        usersData = await fetchGoogleSheetsData('Users');
+        displayUsers();
+      } catch (error) {
+        console.error('Error loading users:', error);
+        notify('Error loading users', 'danger');
+      }
+    }
+
+    function displayUsers() {
+      const tbody = document.getElementById('usersTable');
+      const startIndex = (currentUsersPage - 1) * itemsPerPage;
+      const endIndex = startIndex + itemsPerPage;
+      const currentUsers = usersData.slice(startIndex, endIndex);
+      
+      if (currentUsers.length === 0) {
+        tbody.innerHTML = `
+          <tr>
+            <td colspan="10" class="text-center py-4 text-muted">
+              <i class="bi bi-inbox"></i> No users found
+            </td>
+          </tr>
+        `;
+        return;
+      }
+      
+      tbody.innerHTML = currentUsers.map((user, idx) => `
+        <tr>
+          <td><span class="badge bg-secondary">${escapeHtml(user[0] || 'N/A')}</span></td>
+          <td><strong>${escapeHtml(user[1] || 'N/A')}</strong></td>
+          <td>${escapeHtml(user[2] || 'N/A')}</td>
+          <td>${escapeHtml(user[3] || 'N/A')}</td>
+          <td><code>••••••••</code></td>
+          <td><span class="badge ${user[5] === 'Admin' ? 'bg-danger' : user[5] === 'Manager' ? 'bg-warning' : 'bg-info'}">${escapeHtml(user[5] || 'User')}</span></td>
+          <td>${escapeHtml(user[6] || '👤')}</td>
+          <td>${formatDate(user[7])}</td>
+          <td>${formatDate(user[8]) || '<small class="text-muted">Never</small>'}</td>
+          <td>
+            <div class="btn-group btn-group-sm" role="group">
+              <button type="button" class="btn btn-outline-info" onclick="editUser('${startIndex + idx + 2}')">
+                <i class="bi bi-pencil"></i>
+              </button>
+              <button type="button" class="btn btn-outline-danger" onclick="deleteUser('${startIndex + idx + 2}', '${escapeHtml(user[0])}')">
+                <i class="bi bi-trash"></i>
+              </button>
+            </div>
+          </td>
+        </tr>
+      `).join('');
+      
+      // Update pagination
+      const totalPages = Math.ceil(usersData.length / itemsPerPage);
+      document.getElementById('usersPageInfo').textContent = 
+        `Page ${currentUsersPage} of ${totalPages}`;
+    }
+
+    function showAddUserModal() {
+      alert('Add new user modal - To be implemented');
+    }
+
+    function editUser(rowIndex) {
+      alert(`Edit user at row ${rowIndex} - To be implemented`);
+    }
+
+    function deleteUser(rowIndex, userId) {
+      if (confirm(`Are you sure you want to delete user ${userId}?`)) {
+        notify(`User ${userId} deleted successfully`, 'success');
+        loadUsers();
+      }
+    }
+
+    // ==================== LOGS MANAGEMENT ====================
+    async function loadLogs() {
+      try {
+        logsData = await fetchGoogleSheetsData('Logs');
+        displayLogs();
+      } catch (error) {
+        console.error('Error loading logs:', error);
+      }
+    }
+
+    function displayLogs() {
+      const tbody = document.getElementById('logsTable');
+      
+      if (logsData.length === 0) {
+        tbody.innerHTML = `
+          <tr>
+            <td colspan="5" class="text-center py-4 text-muted">
+              <i class="bi bi-clock-history"></i> No activity logs found
+            </td>
+          </tr>
+        `;
+        return;
+      }
+      
+      // Show last 50 logs in reverse order
+      tbody.innerHTML = logsData.slice(-50).reverse().map(log => `
+        <tr>
+          <td><small>${formatDate(log[0])} ${log[0]?.split(' ')[1] || ''}</small></td>
+          <td><span class="badge bg-info">${escapeHtml(log[1] || 'N/A')}</span></td>
+          <td><code>${escapeHtml(log[2] || 'N/A')}</code></td>
+          <td><strong>${escapeHtml(log[3] || 'System')}</strong></td>
+          <td><small>${escapeHtml(log[4] || '')}</small></td>
+        </tr>
+      `).join('');
+    }
+
+    // ==================== ACTIVITY LOGGING ====================
+    async function logActivity(action, details, user = "System") {
+      try {
+        const timestamp = new Date().toLocaleString('bn-BD');
+        const logData = [timestamp, action, details, user || "System", ""];
+        
+        await saveToGoogleSheets('Logs', [logData]);
+        
+        logsData.push(logData);
+        if (currentPage === 'logs') {
+          displayLogs();
+        }
+      } catch (error) {
+        console.warn('Logging error:', error);
+      }
+    }
+
+    // ==================== PROFILE & SETTINGS ====================
+    function toggleProfileDropdown() {
+      const dropdown = document.getElementById('profileDropdown');
+      dropdown.classList.toggle('show');
+      document.getElementById('settingsDropdown').classList.remove('show');
+    }
+
+    function toggleSettingsDropdown() {
+      const dropdown = document.getElementById('settingsDropdown');
+      dropdown.classList.toggle('show');
+      document.getElementById('profileDropdown').classList.remove('show');
+    }
+
+    // Close dropdowns when clicking outside
+    document.addEventListener('click', function(e) {
+      if (!e.target.closest('.profile-section') && !e.target.closest('.settings-btn')) {
+        document.getElementById('profileDropdown').classList.remove('show');
+        document.getElementById('settingsDropdown').classList.remove('show');
+      }
+    });
+
+    function showSettings() {
+      document.getElementById('settingsDropdown').classList.remove('show');
+      alert('System settings - To be implemented');
+    }
+
+    function showThemeSettings() {
+      alert('Theme settings - To be implemented');
+    }
+
+    function showNotificationSettings() {
+      alert('Notification settings - To be implemented');
+    }
+
+    function showBackupSettings() {
+      alert('Backup & Restore - To be implemented');
+    }
+
+    function viewProfile() {
+      alert('View profile - To be implemented');
+    }
+
+    function editProfile() {
+      alert('Edit profile - To be implemented');
+    }
+
+    function changePassword() {
+      alert('Change password - To be implemented');
+    }
+
+    function showMyActivity() {
+      showPage('logs');
+    }
+
+    function logout() {
+      if (confirm('Are you sure you want to logout?')) {
+        document.getElementById('profileDropdown').classList.remove('show');
+        notify('Logging out...', 'info');
+        setTimeout(() => {
+          window.location.reload();
+        }, 1000);
+      }
+    }
+
+    // ==================== INITIALIZATION ====================
+    document.addEventListener('DOMContentLoaded', function() {
+      // Initialize forms
+      loadWorkEntryData();
+      loadBDIRData();
+      
+      // Load initial data
+      loadDashboardData();
+      loadCustomers();
+      loadPayments();
+      loadReports();
+      loadUsers();
+      loadLogs();
+      
+      // Log initial activity
+      logActivity('System Start', 'Application loaded successfully', 'System');
+      
+      console.log('✅ JOHAN SHOP ERP v6.0 Initialized');
+      console.log('📊 Sheets Integration: Ready');
+      console.log('👤 Current User: Admin');
+    });
+
+    // Auto-refresh dashboard every 30 seconds
+    setInterval(() => {
+      if (currentPage === 'dashboard') {
+        loadDashboardData();
+      }
+    }, 30000);
+  </script>
+</body>
+</html>
